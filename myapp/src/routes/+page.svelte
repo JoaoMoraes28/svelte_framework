@@ -6,7 +6,7 @@
     let raceDog;
 
     function goPageDog() {
-        goto(`/pageDog?termo=${raceDog}`);
+        goto(`/pageDog?race=${raceDog}`);
     }
 </script>
 
