@@ -1,3 +1,3 @@
-<main>
-    <p>teste</p>
-</main>
+<script></script>
+<main></main>
+<style></style>
