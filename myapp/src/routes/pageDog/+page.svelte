@@ -7,18 +7,23 @@
     let race = $page.url.searchParams.get("race");
     let listDogs = [];
 
-    async function getDog() {
+    async function getDog(key) {
         let url = `https://dog.ceo/api/breed/${race}/images`;
         let response = await fetch(url);
         let dogs = await response.json();
 
-        setListDogs(dogs);
+        if (dogs.code != 404) {
+            setListDogs(dogs);
+        } else {
+            alert('Nenhuma raça encontrada!')
+        }
+        
     }
 
     function setListDogs(dogs) {
         listDogs = dogs;
     }
-    
+
     getDog();
 </script>
 
@@ -30,7 +35,7 @@
         href="https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&family=Kristi&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet"
     />
-    <link rel="shortcut icon" href="{favIcon}" type="image/x-icon">
+    <link rel="shortcut icon" href={favIcon} type="image/x-icon" />
 </svelte:head>
 
 <header>
@@ -43,7 +48,15 @@
 <main>
     <div class="containerUlInput">
         <div class="containerInput">
-            <input bind:value={race} type="text" />
+            <input
+                on:keypress={() => {
+                    if (event.key == "Enter") {
+                        getDog();
+                    }
+                }}
+                bind:value={race}
+                type="text"
+            />
             <button on:click={getDog}>
                 <img {src} alt="Lupa para busca da raça do cachorro" />
             </button>
@@ -73,6 +86,21 @@
         height: 100dvh;
         box-sizing: border-box;
         background-color: #fff6e6;
+    }
+
+    ::-webkit-scrollbar {
+        width: 10px;
+        height: 10px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #666666;
+        border-radius: 10px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #9999993b;
+        border-radius: 10px;
     }
 
     header {
@@ -126,11 +154,16 @@
 
     .imgDog {
         max-width: 100%;
-        height: auto;
+        height: 90%;
         border-radius: 5px;
         border-style: solid;
         border-color: white;
-        border-width: 8px;
+        border-width: 6px;
+        transition: 0.2s ease-in-out;
+    }
+
+    .imgDog:hover {
+        transform: rotate(0.8deg);
     }
 
     .containerInput {

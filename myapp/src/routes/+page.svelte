@@ -31,7 +31,11 @@
 <main>
     <div class="containerUlInput">
         <div class="containerInput">
-            <input bind:value={raceDog} type="text" />
+            <input on:keypress={() => {
+                if(event.key == 'Enter') {
+                    goPageDog()
+                }
+            }} bind:value={raceDog} type="text" />
             <button on:click={goPageDog}>
                 <img {src} alt="Lupa para busca da raça do cachorro" />
             </button>
